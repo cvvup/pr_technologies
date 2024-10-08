@@ -95,7 +95,7 @@ public:
   Fort(int id, const std::string &name, int x, int y)
       : Building(id, name, x, y) {}
 
-  void attack(Unit &unit) {
+  void attack(Unit &unit) override {
     if (isBuilt()) {
       unit.receiveDamage(150);
       std::cout << getName() << " attacks " << unit.getName() << std::endl;
@@ -110,7 +110,7 @@ public:
   MobileHome(int id, const std::string &name, int x, int y)
       : Building(id, name, x, y) {}
 
-  void move(int newX, int newY) {
+  void move(int newX, int newY) override {
     if (isBuilt()) {
       setPosition(newX, newY);
       std::cout << getName() << " moves to (" << newX << ", " << newY << ")."
