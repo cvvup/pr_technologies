@@ -51,28 +51,29 @@ public:
   }
 };
 
-class Archer : public Unit {
+class Attacker {
+public:
+  virtual void attack(Unit &unit) = 0;
+};
+
+class Moveable {
+public:
+  virtual void move(int newX, int newY) = 0;
+};
+
+class Archer : public Unit, public Attacker, public Moveable {
 public:
   Archer(int id, std::string name, int x, int y, float hp)
       : Unit(id, name, x, y, hp) {}
 
-  void attack(Unit &unit) {
-    if (isAlive()) {
-      unit.receiveDamage(10);
-      std::cout << getName() << " attacks " << unit.getName() << std::endl;
-    } else {
-      std::cout << getName() << " is dead." << std::endl;
-    }
+  void attack(Unit &unit) override {
+    std::cout << getName() << " attacks " << unit.getName() << std::endl;
   }
 
-  void move(int newX, int newY) {
-    if (isAlive()) {
-      setPosition(newX, newY);
-      std::cout << getName() << " moves to (" << newX << ", " << newY << ")."
-                << std::endl;
-    } else {
-      std::cout << getName() << " is dead." << std::endl;
-    }
+  void move(int x, int y) override {
+    setPosition(x, y);
+    std::cout << getName() << " moves to (" << x << ", " << y << ")."
+              << std::endl;
   }
 };
 
@@ -89,7 +90,7 @@ public:
   void build() { built = true; }
 };
 
-class Fort : public Building {
+class Fort : public Building, public Attacker {
 public:
   Fort(int id, const std::string &name, int x, int y)
       : Building(id, name, x, y) {}
@@ -104,7 +105,7 @@ public:
   }
 };
 
-class MobileHome : public Building {
+class MobileHome : public Building, public Moveable {
 public:
   MobileHome(int id, const std::string &name, int x, int y)
       : Building(id, name, x, y) {}
@@ -126,7 +127,7 @@ int main() {
   unit.receiveDamage(20);
   unit.receiveDamage(50);
 
-  Fort fort(2, "Fort", 0, 0);
+  Fort fort(2, "Vasya", 0, 0);
   fort.attack(unit);
 
   MobileHome mobileHome(3, "Mobile Home", 0, 0);
