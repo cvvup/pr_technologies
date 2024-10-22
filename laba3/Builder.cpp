@@ -12,7 +12,7 @@ public:
   void setSauce(std::string &sauce) { this->sauce = sauce; }
 
   std::string toString() {
-    return "Salad{tomatoes='" + tomatoes + "', dressing='" + sauce + "'}";
+    return "Salad{tomatoes='" + tomatoes + "', sauce='" + sauce + "'}";
   }
 };
 
@@ -62,6 +62,4 @@ int main() {
   Salad salad = builder.getResult();
 
   std::cout << salad.toString() << std::endl;
-
-  return 0;
 }
