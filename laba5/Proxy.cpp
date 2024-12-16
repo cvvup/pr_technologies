@@ -26,7 +26,7 @@ class DocumentProxy : public Document {
 private:
   std::string filename;
   std::string userRole;
-  RealDocument *realdoc;
+  RealDocument* realdoc;
 
 public:
   DocumentProxy(const std::string &filename, const std::string &userRole)
